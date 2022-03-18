@@ -1,68 +1,114 @@
-import React, { useState } from "react";
-//import { useHistory } from "react-router-dom";
+import { useState } from 'react';
+import { Link } from "react-router-dom";
+import './SignUp.css';
 
-const SignUp = ({ setUser }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignUp() {
 
-  //const history = useHistory();
+    // States for registration
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://vinted-express.herokuapp.com/user/signup",
+    // States for checking the errors
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState(false);
 
-        { username, email, password }
-      );
-      if (response.data.token) {
-        setUser(response.data.token);
-        history.push("/");
-      } else {
-        alert("something happened 😱");
-      }
-    } catch (error) {
-      console.log(error.message);
+    // Handling the name change
+    const handleName = (e) => {
+    setName(e.target.value);
+    setSubmitted(false);
+    };
+
+    // Handling the email change
+    const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setSubmitted(false);
+    };
+
+    // Handling the password change
+    const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setSubmitted(false);
+    };
+
+    // Handling the form submission
+    const handleSubmit = (e) => {
+    e.preventDefault();
+    if (name === '' || email === '' || password === '') {
+    setError(true);
+    } else {
+    setSubmitted(true);
+    setError(false);
     }
-  };*/
+    };
 
-  return (
-    <div className="Signup">
-      <div className="signup-login-position">
-        <h3>S'inscrire</h3>
-        
-          <input
-            type="text"
-            placeholder="Nom d'utilisateur"
-            value={username}
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-          <br />
-          <input
-            type="email"
-            placeholder="Adresse email"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-          />
-          <br />
-          <input
-            type="password"
-            placeholder="Mot de passe"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-          <br />
-          <input type="submit" value="S'inscrire" />
-        
-      </div>
+    // Showing success message
+    const successMessage = () => {
+    return (
+    <div
+    className="success"
+    style={{
+    display: submitted ? '' : 'none',
+    }}>
+    <h1>User {name} successfully registered!!</h1>
     </div>
-  );
-};
-export default SignUp;
+    );
+    };
+
+    // Showing error message if error is true
+    const errorMessage = () => {
+    return (
+    <div
+    className="error"
+    style={{
+    display: error ? '' : 'none',
+    }}>
+    <h1>Please enter all the fields</h1>
+    </div>
+    );
+    };
+
+    return (
+    <div className="signUp">
+    <div>
+    <h1>User Registration</h1>
+    </div>
+
+    {/* Calling to the methods */}
+    <div className="messages">
+    {errorMessage()}
+    {successMessage()}
+    </div>
+
+        <form className="form">
+            <div className="input-group">
+                <label className="label">Name</label>
+                <input onChange={handleName} className="input"
+                value={name} type="text" />
+            </div>
+
+            <div className="input-group">
+                <label className="label">Email</label>
+                <input onChange={handleEmail} className="input"
+                value={email} type="email" placeholder="nom@gmail.com" />
+            </div>
+
+            <div className="input-group">
+                <label className="label">Password</label>
+                <input onChange={handlePassword} className="input"
+                value={password} type="password" />
+            </div>
+
+            <button onClick={handleSubmit} className="primary" type="submit">
+            Submit
+            </button>
+
+            <Link to="/login">
+                <button className="secondary"> 
+                Déja un compte ? 
+                </button>
+            </Link>    
+        </form>
+    </div>
+    );
+}
