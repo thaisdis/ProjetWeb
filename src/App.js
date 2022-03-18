@@ -1,8 +1,11 @@
 import React from 'react';
 import Header from './Components/Header';
 import './App.css';
-import Home from './Containers/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Home from './Containers/Home';
+import SignUp from './Containers/SignUp';
+
 
 function App() {
   return (
@@ -11,6 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home/>} />
+          <Route path='/signup' element={<SignUp/>} />
         </Routes>
       </Router>
     </>
