@@ -71,7 +71,7 @@ export default function SignUp() {
     return (
     <div className="signUp">
     <div>
-    <h1>User Registration</h1>
+    <h1>Inscription</h1>
     </div>
 
     {/* Calling to the methods */}
@@ -82,7 +82,7 @@ export default function SignUp() {
 
         <form className="form">
             <div className="input-group">
-                <label className="label">Name</label>
+                <label className="label">Nom</label>
                 <input onChange={handleName} className="input"
                 value={name} type="text" />
             </div>
@@ -94,13 +94,13 @@ export default function SignUp() {
             </div>
 
             <div className="input-group">
-                <label className="label">Password</label>
+                <label className="label">Mot de passe</label>
                 <input onChange={handlePassword} className="input"
                 value={password} type="password" />
             </div>
 
             <button onClick={handleSubmit} className="primary" type="submit">
-            Submit
+            Envoyer
             </button>
 
             <Link to="/login">
