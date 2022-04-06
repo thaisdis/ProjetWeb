@@ -1,8 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import axios from './API/axios';
+
+const loginURL='/login';
+const successMessage = () => {
+  return (
+  <div
+  className="success"
+  style={{
+  }}>
+  <Link to="/publish">
+        </Link> 
+  </div>
+  );
+  };
+
+  // Showing error message if error is true
+  const errorMessage = (message) => {
+    alert("Wrong email or password combination");
+  };
+
 
 class Login extends Component {
+  
+
   handleSubmit = e => {
     e.preventDefault();
     console.log(e.target.email.value);
@@ -20,10 +42,29 @@ class Login extends Component {
       alert("Successfully logged in");
       e.target.email.value = "";
       e.target.password.value = "";
-    } else {
-      alert("Wrong email or password combination");
+    }
+      
+    
+    try {
+        const response =async()=> await axios.post(loginURL,
+          JSON.stringify({email: e.target.email.value,password: e.target.password.value}),
+          {
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true} 
+        );
+        alert("hey");
+        console.log(response.data)
+        successMessage();
+        
+        
+      
+    } catch (error) {
+      errorMessage();
+      
     }
   };
+
+  
 
   render() {
     return (

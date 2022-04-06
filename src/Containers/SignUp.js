@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import './SignUp.css';
+import axios from './API/axios';
 
 export default function SignUp() {
+
+    
 
     // States for registration
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const SignUpURL='/user/register'
 
     // States for checking the errors
     const [submitted, setSubmitted] = useState(false);
@@ -33,12 +37,27 @@ export default function SignUp() {
 
     // Handling the form submission
     const handleSubmit = (e) => {
+    
     e.preventDefault();
     if (name === '' || email === '' || password === '') {
     setError(true);
     } else {
-    setSubmitted(true);
-    setError(false);
+        try{
+            const response =async()=> await axios.post(SignUpURL,
+                JSON.stringify({pseudo: name,email,password}),
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    withCredentials: true} 
+            );
+            console.log(response.data)
+            setSubmitted(true);
+            successMessage();
+
+        }catch(err){
+            setError(false);
+            errorMessage();
+        }
+    
     }
     };
 
@@ -67,6 +86,9 @@ export default function SignUp() {
     </div>
     );
     };
+
+    
+    
 
     return (
     <div className="signUp">
